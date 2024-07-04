@@ -1,0 +1,43 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "Ubuntu", sans-serif;
+}
+
+/* NAVBAR */
+
+.navbar {
+    font-family: "League Gothic", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.navbar-expand-md .navbar-collapse {
+    justify-content: flex-end;
+}
+
+.nav-text {
+    font-size: x-large;
+    padding: 0;
+    color: #19ADE5;
+}
+
+/* TABLE */
+th{
+    color: #19ADE5 !important;
+}
+
+/* FORM */
+
+.form-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 10px;
+
+        label {
+            padding: 5px;
+        }
+}
