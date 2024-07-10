@@ -89,7 +89,6 @@ async function edit_prop(prop_id) {
   }
 }
 
-
 async function new_prop() {
   const form = document.getElementById("newPropForm");
   const formData = new FormData();
