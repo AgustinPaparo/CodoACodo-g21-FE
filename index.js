@@ -1,5 +1,5 @@
-// const base_url = "https://codoacodo-g21-be.onrender.com";
-const base_url = "http://127.0.0.1:5000/";
+const base_url = "https://codoacodo-g21-be.onrender.com";
+// const base_url = "http://127.0.0.1:5000/";
 const github_url =
   "https://raw.githubusercontent.com/AgustinPaparo/CodoACodo-g21-BE/main/static/photos/";
 
