@@ -19,7 +19,10 @@
       href="https://fonts.googleapis.com/css2?family=League+Gothic&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
 
     <link href="./forms.css" rel="stylesheet" />
   </head>
@@ -32,7 +35,7 @@
           <img src="./static/neaprop.png" alt="logo neaprop" height="30" />
         </a>
         <!-- Titulo ADMIN -->
-          <span class="nav-text">ADMIN PAGE</span>
+        <span class="nav-text">ADMIN PAGE</span>
       </div>
     </nav>
 
@@ -50,10 +53,12 @@
         </button>
 
         <form class="col-3">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Filter" >
-                <button class="input-group-text"><i class="bi bi-search"></i></button>
-              </div>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Filter" />
+            <button class="input-group-text">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
         </form>
       </div>
 
@@ -90,12 +95,17 @@
               <td>Disponible</td>
               <td>Venta</td>
               <td>
-                <button class="btn btn-info btn-sm"><i class="bi bi-images"></i></button>
-                <button class="btn btn-success btn-sm"><i class="bi bi-pencil-square"></i></button>
-                <button class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i></button>
+                <button class="btn btn-info btn-sm">
+                  <i class="bi bi-images"></i>
+                </button>
+                <button class="btn btn-success btn-sm">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-danger btn-sm">
+                  <i class="bi bi-trash3"></i>
+                </button>
               </td>
             </tr>
-            
           </tbody>
         </table>
       </div>
@@ -123,7 +133,12 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form action="" method="POST" enctype="multipart/form-data" id="newPropForm">
+            <form
+              action=""
+              method="POST"
+              enctype="multipart/form-data"
+              id="newPropForm"
+            >
               <div class="form-group">
                 <label for="propietario_id">Propietario ID:</label>
                 <input
@@ -240,12 +255,170 @@
             >
               Cerrar
             </button>
-            <button type="button" class="btn btn-primary" onclick=new_prop() >Guardar</button>
+            <button type="button" class="btn btn-primary" onclick="new_prop()">
+              Guardar
+            </button>
           </div>
         </div>
       </div>
     </div>
 
+    <div
+      class="modal fade"
+      id="editPropModal"
+      tabindex="-1"
+      aria-labelledby="editPropModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="editPropModalLabel">
+              Editar propiedad
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="editPropForm">
+              <div class="form-group">
+                <label for="propietario_id">Propietario ID:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="propietario_id"
+                  id="propietario_id"
+                  required
+                />
+
+                <label for="direccion">Dirección:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="direccion"
+                  id="direccion"
+                  required
+                />
+
+                <label for="tipo">Tipo:</label>
+                <select class="form-control" name="tipo" id="tipo" required>
+                  <option value="casa">Casa</option>
+                  <option value="departamento">Departamento</option>
+                  <option value="quinta">Quinta</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="habitaciones">Habitaciones:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="habitaciones"
+                  id="habitaciones"
+                  required
+                />
+
+                <label for="baños">Baños:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="banos"
+                  id="banos"
+                  required
+                />
+
+                <label for="tamano">Metros²:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  step="0.01"
+                  name="tamano"
+                  id="tamano"
+                  required
+                />
+
+                <label class="form-check-label" for="cochera">Cochera</label>
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  name="cochera"
+                  id="cochera"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="estado">Estado:</label>
+                <select class="form-control" name="estado" id="estado" required>
+                  <option value="disponible">Disponible</option>
+                  <option value="alquilado">Alquilado</option>
+                  <option value="vendido">Vendido</option>
+                </select>
+
+                <label for="precio">Precio:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  step="0.01"
+                  name="precio"
+                  id="precio"
+                  required
+                />
+
+                <label for="tipo_contrato">Tipo de Contrato:</label>
+                <select
+                  class="form-control"
+                  name="tipo_contrato"
+                  id="tipo_contrato"
+                  required
+                >
+                  <option value="venta">Venta</option>
+                  <option value="alquiler">Alquiler</option>
+                  <option value="venta y alquiler">Venta y Alquiler</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="photo">Imagen:</label>
+                <input
+                  type="file"
+                  class="form-control-file"
+                  name="photo"
+                  id="photo"
+                  multiple
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="saveEditedProperty()"
+            >
+              Guardar cambios
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -257,6 +430,5 @@
       crossorigin="anonymous"
     ></script>
     <script src="./index.js"></script>
-
   </body>
 </html>

@@ -1,6 +1,7 @@
 // const base_url = "https://codoacodo-g21-be.onrender.com";
 const base_url = "http://127.0.0.1:5000/";
-const github_url = "https://raw.githubusercontent.com/AgustinPaparo/CodoACodo-g21-BE/main/static/photos/"
+const github_url =
+  "https://raw.githubusercontent.com/AgustinPaparo/CodoACodo-g21-BE/main/static/photos/";
 
 document.addEventListener("DOMContentLoaded", () => {
   const tableBody = document.querySelector("#propertyTable tbody");
@@ -73,11 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-function edit_prop(prop_id) {
-  property = fetch(`${base_url}/api/get_property/${prop_id}`);
-
-  // abrir el modal con todos los datos de la propiedad cargados
+async function edit_prop(prop_id) {
+  try {
+    const response = await fetch(`${base_url}/api/get_property/${prop_id}`);
+    if (!response.ok) {
+      throw new Error("Error al obtener la propiedad");
+    }
+    const property = await response.json();
+    populateEditForm(property);
+    $("#editPropModal").modal("show");
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Error al obtener la propiedad para editar");
+  }
 }
+
 
 async function new_prop() {
   const form = document.getElementById("newPropForm");
@@ -188,20 +199,122 @@ async function show_images(id) {
       list.innerHTML = "";
 
       // Crear elementos <img> y agregarlos a la lista
-      data.imagenes.forEach(img => {
-        const imgElement = document.createElement('img');
+      data.imagenes.forEach((img) => {
+        const imgElement = document.createElement("img");
         imgElement.src = `${github_url}/${directory}/${img}`;
-        imgElement.alt = img; 
-        
+        imgElement.alt = img;
+
         const listItem = document.createElement("li");
         listItem.classList.add("list-group-item");
         listItem.appendChild(imgElement);
-        
+
         list.appendChild(listItem);
       });
-
     } catch (error) {
-      console.error("There has been a problem with your fetch operation:", error);
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
     }
   }
+}
+
+async function saveEditedProperty() {
+  const form = document.getElementById("editPropForm");
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch(
+      `${base_url}/api/update_property/${formData.get("prop_id")}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(Object.fromEntries(formData.entries())),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Error al actualizar la propiedad");
+    }
+    alert("Propiedad actualizada correctamente");
+    $("#editPropModal").modal("hide"); // Cerrar el modal
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Error al actualizar la propiedad");
+  }
+}
+
+function populateEditForm(property) {
+  const form = document.getElementById("editPropForm");
+  console.log(property);
+
+  form.innerHTML = `
+    <input type="hidden" name="prop_id" value="${property.id}">
+    
+    <div class="form-group">
+      <label for="propietario_id">Propietario ID:</label>
+      <input type="text" class="form-control" name="propietario_id" id="propietario_id" value="${property.propietario_id}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="direccion">Dirección:</label>
+      <input type="text" class="form-control" name="direccion" id="direccion" value="${property.direccion}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="tipo">Tipo:</label>
+      <select class="form-control" name="tipo" id="tipo" required>
+        <option value="casa" ${property.tipo === 'casa' ? 'selected' : ''}>Casa</option>
+        <option value="departamento" ${property.tipo === 'departamento' ? 'selected' : ''}>Departamento</option>
+        <option value="quinta" ${property.tipo === 'quinta' ? 'selected' : ''}>Quinta</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="habitaciones">Habitaciones:</label>
+      <input type="number" class="form-control" name="habitaciones" id="habitaciones" value="${property.habitaciones}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="banos">Baños:</label>
+      <input type="number" class="form-control" name="banos" id="banos" value="${property.baños}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="tamano">Metros²:</label>
+      <input type="number" class="form-control" step="0.01" name="tamano" id="tamano" value="${property.tamaño}" required>
+    </div>
+    
+    <div class="form-group">
+      <label class="form-check-label" for="cochera">Cochera</label>
+      <input type="checkbox" class="form-check-input" name="cochera" id="cochera" ${property.cochera ? 'checked' : ''}>
+    </div>
+    
+    <div class="form-group">
+      <label for="estado">Estado:</label>
+      <select class="form-control" name="estado" id="estado" required>
+        <option value="disponible" ${property.estado === 'disponible' ? 'selected' : ''}>Disponible</option>
+        <option value="alquilado" ${property.estado === 'alquilado' ? 'selected' : ''}>Alquilado</option>
+        <option value="vendido" ${property.estado === 'vendido' ? 'selected' : ''}>Vendido</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="precio">Precio:</label>
+      <input type="number" class="form-control" step="0.01" name="precio" id="precio" value="${property.precio}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="tipo_contrato">Tipo de Contrato:</label>
+      <select class="form-control" name="tipo_contrato" id="tipo_contrato" required>
+        <option value="venta" ${property.tipo_contrato === 'venta' ? 'selected' : ''}>Venta</option>
+        <option value="alquiler" ${property.tipo_contrato === 'alquiler' ? 'selected' : ''}>Alquiler</option>
+        <option value="venta y alquiler" ${property.tipo_contrato === 'venta y alquiler' ? 'selected' : ''}>Venta y Alquiler</option>
+      </select>
+    </div>
+  `;
 }
